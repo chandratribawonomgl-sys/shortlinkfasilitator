@@ -1,0 +1,24 @@
+<div id="profile"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const app = initializeApp({ apiKey:"XXX", authDomain:"XXX", projectId:"XXX" });
+const db = getFirestore(app);
+
+const username = window.location.search.replace("?u=", "");
+
+const querySnapshot = await getDocs(collection(db, "microsites"));
+
+querySnapshot.forEach((doc) => {
+  const data = doc.data();
+  if (data.username === username) {
+    document.getElementById("profile").innerHTML = `
+      <h1>${data.name}</h1>
+      <a href="${data.link1}">Link 1</a>
+      <a href="${data.link2}">Link 2</a>
+    `;
+  }
+});
+</script>
