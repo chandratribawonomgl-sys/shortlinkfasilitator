@@ -1,0 +1,19 @@
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = { apiKey:"XXX", authDomain:"XXX", projectId:"XXX" };
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const slug = window.location.pathname.replace("/", "");
+
+const querySnapshot = await getDocs(collection(db, "links"));
+
+querySnapshot.forEach((doc) => {
+  const data = doc.data();
+  if (data.slug === slug) {
+    window.location.href = data.url;
+  }
+});
+</script>
